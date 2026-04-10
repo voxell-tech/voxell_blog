@@ -36,7 +36,8 @@ deps = ["templates", "utils", "components"]
 nested = [
   "assets/icons",
   "assets/styles",
-  "assets/fonts"
+  "assets/fonts",
+  "assets/js"
 ]
 
 [build.slug]
