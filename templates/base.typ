@@ -81,7 +81,7 @@
           href: "https://voxell.dev",
           target: "_blank",
           rel: ("noopener", "noreferrer"),
-        )[voxell.dev ↗]
+        )[Voxell ↗]
       ]
     ]
   ]
