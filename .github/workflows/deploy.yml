@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Tola
         run: |
-          curl -fsSL https://github.com/tola-ssg/tola-ssg/releases/latest/download/tola-x86_64-linux-musl.tar.gz | tar -xz
+          curl -fsSL https://github.com/tola-rs/tola-ssg/releases/latest/download/tola-x86_64-linux-static.tar.gz | tar -xz
           sudo mv tola /usr/local/bin/
 
       - name: Install Tailwind CSS
@@ -32,14 +32,8 @@ jobs:
           chmod +x tailwindcss-linux-x64
           sudo mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
 
-      - name: Install Node dependencies
-        run: npm ci
-
       - name: Build
         run: tola build --clean
-
-      - name: Index with Pagefind
-        run: npx pagefind --site public
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

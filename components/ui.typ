@@ -23,8 +23,9 @@
 
 /// Post card for blog listings
 #let post-card(post) = {
-  let date = post.at("date", default: "")
+  let date = post.at("date", default: none)
   let tags = post.at("tags", default: ())
+  let reading-time = post.at("reading-time", default: none)
   html.elem("a", attrs: (
     class: "block mb-6 p-4 border border-white/10 rounded-lg bg-surface/50 hover:bg-surface transition-colors no-underline group",
     href: post.permalink,
@@ -37,12 +38,21 @@
       #post.title
     ]
 
-    #if date != "" or tags.len() > 0 {
-      layout.flex-row(
-        gap: 4,
-        html.span(class: "text-sm text-muted")[#date],
-        ..tags.map(t => tag(t)),
-      )
+    #{
+      let parts = ()
+      if date != none {
+        parts.push(date)
+      } else {
+        parts.push(html.span(
+          class: "text-sm italic text-muted",
+        )[Coming soon...])
+      }
+      if reading-time != none {
+        parts.push(html.span(
+          class: "text-sm text-muted",
+        )[#str(reading-time) min read])
+      }
+      layout.flex-row(gap: 4, ..parts, ..tags.map(t => tag(t)))
     }
 
     #if post.at("summary", default: none) != none {
@@ -67,14 +77,21 @@
   #html.div(class: "flex flex-wrap mt-auto")[
     #html.a(href: url, target: "_blank", rel: ("noopener", "noreferrer"))[
       #html.elem("img", attrs: (
-        src: "https://img.shields.io/github/stars/" + repo + "?style=flat&logo=github&label=",
+        src: "https://img.shields.io/github/stars/"
+          + repo
+          + "?style=flat&logo=github&label=",
         alt: "GitHub stars",
         height: "20",
       ))
     ]
-    #html.a(href: crates-url, target: "_blank", rel: ("noopener", "noreferrer"))[
+    #html.a(href: crates-url, target: "_blank", rel: (
+      "noopener",
+      "noreferrer",
+    ))[
       #html.elem("img", attrs: (
-        src: "https://img.shields.io/crates/v/" + c + "?style=flat&logo=rust&label=",
+        src: "https://img.shields.io/crates/v/"
+          + c
+          + "?style=flat&logo=rust&label=",
         alt: "crates.io version",
         height: "20",
       ))

@@ -6,6 +6,7 @@
 #let page = wrap-page(
   base: base,
   head: m => [
+    #html.elem("meta", attrs: (name: "viewport", content: "width=device-width, initial-scale=1"))
     #if m.title != none {
       html.title(m.title + " | " + info.title)
     } else {
