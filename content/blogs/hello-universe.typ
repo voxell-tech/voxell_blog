@@ -58,6 +58,6 @@ Whether you want to contribute code, report issues, share feedback, or just foll
 Check out our projects on #link("https://github.com/voxell-tech")[GitHub] and feel free to open an issue or send a pull request.
 Every contribution, big or small, helps move things forward.
 We also have a #link("https://discord.gg/Mhnyp6VYEQ")[Discord] server where we hold most of our discussions at.
-Finally, we host a bi-monthly #link("https://calendar.google.com/calendar?cid=NWJmNTUxODcwMWQyMzA4N2YzZmFhN2Q2YjAzMTBmMzEwMTNiNTA2MDVlMmU5NDhmM2JmYzU1MjQ1OTQ5ZGU3OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t")["office hours"] on the Discord server as well anyone is more than welcomed to join us!
+Finally, we host a bi-monthly #link("https://calendar.google.com/calendar?cid=NWJmNTUxODcwMWQyMzA4N2YzZmFhN2Q2YjAzMTBmMzEwMTNiNTA2MDVlMmU5NDhmM2JmYzU1MjQ1OTQ5ZGU3OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t")["office hours"] on the Discord server as well and anyone is more than welcomed to join us!
 
 Welcome to Voxell!
