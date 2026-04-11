@@ -1,0 +1,53 @@
+@import 'tailwindcss';
+
+/* Tailwind CSS v4 configuration */
+@theme {
+    /* Monokai Pro color palette */
+    --color-accent: #78dce8;
+    --color-bg: #19181a;
+    --color-surface: #2d2a2e;
+    --color-text: #fcfcfa;
+    --color-muted: #939293;
+}
+
+/* Base styles */
+@layer base {
+    html {
+        @apply scroll-smooth bg-bg text-text;
+        color-scheme: dark;
+    }
+
+    body {
+        @apply antialiased min-h-screen;
+    }
+
+    a {
+        @apply text-accent hover:opacity-80 transition-opacity;
+    }
+
+    code {
+        @apply bg-surface px-1.5 py-0.5 rounded-sm text-sm;
+    }
+
+    pre {
+        @apply bg-surface p-2 rounded-sm overflow-x-auto;
+    }
+
+    pre code {
+        @apply bg-transparent p-0;
+    }
+
+    /* Table styles */
+    table {
+        @apply w-full border-collapse border-4 border-gray-600 my-4;
+    }
+
+    th,
+    td {
+        @apply border-4 border-gray-600 p-2 text-left;
+    }
+
+    th {
+        @apply bg-surface font-semibold;
+    }
+}
