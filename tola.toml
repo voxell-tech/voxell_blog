@@ -11,7 +11,7 @@ url = "https://blog.voxell.dev"
 
 [site.header]
 icon = "assets/icons/favicon.ico"
-elements = ['<meta name="darkreader-lock">']
+elements = ['<meta name="darkreader-lock">', '<script src="/js/theme.js"></script>']
 
 [site.nav]
 spa = true

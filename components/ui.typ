@@ -27,7 +27,7 @@
   let tags = post.at("tags", default: ())
   let reading-time = post.at("reading-time", default: none)
   html.elem("a", attrs: (
-    class: "block mb-6 p-4 border border-white/10 rounded-lg bg-surface/50 hover:bg-surface transition-colors no-underline group",
+    class: "block mb-6 p-4 border border-border hover:border-accent/50 rounded-lg bg-surface/50 hover:bg-surface transition-colors no-underline group",
     href: post.permalink,
     "data-title": lower(post.title),
     "data-tags": lower(tags.join(" ")),
@@ -63,7 +63,7 @@
 
 /// Project card with name, shields.io badges, and description
 #let project-card(name, url, repo, description, crate: none) = html.div(
-  class: "flex flex-col p-4 bg-surface rounded-lg border border-white/10 hover:border-accent/30 transition-colors",
+  class: "flex flex-col p-4 bg-surface rounded-lg border border-border hover:border-accent/30 transition-colors",
 )[
   #html.a(
     class: "font-bold text-lg hover:text-accent transition-colors mb-2",
@@ -113,14 +113,14 @@
   assert(preview != none, message: "showcase-demo: `preview` is required")
 
   html.section(
-    class: "my-8 rounded-lg border border-white/10 bg-gradient-to-br from-slate-900/80 via-slate-900/50 to-cyan-950/20 p-4 sm:p-6",
+    class: "my-8 rounded-lg border border-border bg-surface/50 p-4 sm:p-6",
   )[
     #html.div(class: "mb-4")[
-      #html.h3(class: "text-lg sm:text-xl font-semibold text-cyan-300")[
+      #html.h3(class: "text-lg sm:text-xl font-semibold text-accent")[
         #title
       ]
       #if description != none {
-        html.p(class: "mt-1 text-sm text-slate-300")[
+        html.p(class: "mt-1 text-sm text-subtle")[
           #description
         ]
       }
@@ -128,10 +128,10 @@
 
     #html.div(class: "grid gap-4")[
       #html.div(
-        class: "rounded-lg border border-white/10 bg-slate-950/70 overflow-hidden",
+        class: "rounded-lg border border-border bg-bg/70 overflow-hidden",
       )[
         #html.div(
-          class: "border-b border-white/10 px-3 py-2 text-xs uppercase tracking-wide text-slate-400",
+          class: "border-b border-border px-3 py-2 text-xs uppercase tracking-wide text-muted",
         )[
           #code-label
         ]
@@ -141,10 +141,10 @@
       ]
 
       #html.div(
-        class: "rounded-lg border border-cyan-500/30 bg-surface/40 overflow-hidden",
+        class: "rounded-lg border border-accent/30 bg-surface/40 overflow-hidden",
       )[
         #html.div(
-          class: "border-b border-cyan-500/20 px-3 py-2 text-xs uppercase tracking-wide text-cyan-300",
+          class: "border-b border-accent/20 px-3 py-2 text-xs uppercase tracking-wide text-accent",
         )[
           #preview-label
         ]

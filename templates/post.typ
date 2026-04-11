@@ -100,7 +100,7 @@
         html.div(class: "flex flex-wrap justify-center gap-2 my-4")[
           #for tag in m.tags {
             html.span(
-              class: "px-2 py-1 text-sm bg-surface rounded text-cyan-400",
+              class: "px-2 py-1 text-sm bg-surface rounded text-accent",
             )[#tag]
           }
         ]
@@ -108,7 +108,7 @@
 
       // TOC using headings from @tola/current
       let toc-view = if headings.len() > 0 {
-        html.nav(class: "my-6 p-4 border border-white/10 rounded-lg")[
+        html.nav(class: "my-6 p-4 border border-border rounded-lg")[
           #html.div(class: "font-bold mb-3")[Contents]
           #html.div(class: "text-sm space-y-1")[
             #for h in headings {
@@ -116,11 +116,11 @@
               let indent = if h.level == 1 { "" } else { "pr-2" }
               let prefix = if h.level == 1 { "" } else { "→" }
               let prefix = html.span(class: cls(
-                "text-white/75",
+                "text-subtle",
                 indent,
               ))[#prefix]
               let text = html.a(
-                class: "hover:text-sky-400 hover:underline underline-offset-4",
+                class: "hover:text-accent hover:underline underline-offset-4",
                 href: "#" + id,
               )[#h.text]
               let item-class = if h.level == 1 { "mt-5 first:mt-0" } else { "" }
@@ -136,7 +136,7 @@
         #title-view #subtitle-view #tags-view #summary-view #toc-view #layout.hr #body
       ]
 
-      html.footer(class: "mt-12 pt-8 border-t border-white/10")[
+      html.footer(class: "mt-12 pt-8 border-t border-border")[
         #html.a(
           class: cls(
             "text-sm hover:underline underline-offset-4",

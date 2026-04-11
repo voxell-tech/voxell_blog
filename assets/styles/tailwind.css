@@ -2,13 +2,36 @@
 
 /* Tailwind CSS v4 configuration */
 @theme {
-    /* Monokai Pro color palette */
+    /* Monokai Pro dark palette (default) */
     --color-accent: #78dce8;
     --color-bg: #19181a;
     --color-surface: #2d2a2e;
     --color-text: #fcfcfa;
     --color-muted: #939293;
+    --color-subtle: #c1c0c0;
+    --color-purple: #ab9df2;
+    --color-border: rgb(255 255 255 / 0.1);
 }
+
+[data-theme="light"] {
+    --color-accent: #0d7a8a;
+    --color-bg: #fafafa;
+    --color-surface: #f0eeef;
+    --color-text: #2d2a2e;
+    --color-muted: #727072;
+    --color-subtle: #5b595c;
+    --color-purple: #6248c8;
+    --color-border: rgb(0 0 0 / 0.1);
+
+    color-scheme: light;
+}
+
+/* Theme toggle icon visibility */
+.icon-sun { display: inline; }
+.icon-moon { display: none; }
+
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="light"] .icon-moon { display: inline; }
 
 /* Base styles */
 @layer base {

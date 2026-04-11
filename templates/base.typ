@@ -10,9 +10,9 @@
 // ============================================================================
 
 #let colors = (
-  accent: "text-cyan-400",
-  code: "text-purple-300",
-  muted: "text-slate-400",
+  accent: "text-accent",
+  code: "text-purple",
+  muted: "text-muted",
 )
 
 // ============================================================================
@@ -53,7 +53,7 @@
   // Note: The inner <pre> tag already has background/padding styles from tailwind.css.
   // We wrap it in a div primarily for margins and the border.
   show raw.where(block: true): it => html.div(
-    class: "my-2 border border-white/10 rounded-lg",
+    class: "my-2 border border-border rounded-lg",
   )[#it]
 
   // --------------------------------------------------------------------------
@@ -70,7 +70,7 @@
   // Render
   // --------------------------------------------------------------------------
 
-  html.nav(class: "border-b border-white/10")[
+  html.nav(class: "border-b border-border")[
     #html.div(class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between")[
       #html.a(class: "opacity-75 hover:opacity-100 transition-opacity", href: "/")[
         #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
@@ -82,6 +82,13 @@
           target: "_blank",
           rel: ("noopener", "noreferrer"),
         )[Voxell ↗]
+        #html.elem("button", attrs: (
+          id: "theme-toggle",
+          class: "text-muted hover:text-accent transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
+        ))[
+          #html.span(class: "icon-sun")[#html.elem("img", attrs: (src: "/icons/sun.svg", style: "height: 1.25rem; display: inline-block;"))]
+          #html.span(class: "icon-moon")[#html.elem("img", attrs: (src: "/icons/moon.svg", style: "height: 1.25rem; display: inline-block;"))]
+        ]
       ]
     ]
   ]
