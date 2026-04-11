@@ -1,6 +1,6 @@
 # Voxell Blog
 
-Source for the [Voxell blog](https://blog.voxell.dev), built with [tola](https://github.com/tola-ssg/tola) SSG and [Tailwind CSS v4](https://tailwindcss.com).
+Source for the [blog.voxell.dev](blog.voxell.dev), built with [tola](https://github.com/tola-ssg/tola) SSG and [Tailwind CSS v4](https://tailwindcss.com).
 
 ## Prerequisites
 
