@@ -14,6 +14,7 @@ Install **Tailwind CSS** (`package.json` is already set up):
 
 ```sh
 npm install
+npm install -g @tailwindcss/cli
 ```
 
 ## Development
