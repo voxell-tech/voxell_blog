@@ -10,7 +10,7 @@
 
 = What is Voxell?
 
-Voxell is an open-source organization building tools that solve *real*, *hard* problems.
+Voxell is an open-source organization building tools that solve *real*, *challenging* problems.
 We care about pushing technology forward in ways that actually matter (e.g. empowering individuals to create, lowering the barrier to entry, knowledge sharing, and many more).
 
 = But first, who the hell are you?

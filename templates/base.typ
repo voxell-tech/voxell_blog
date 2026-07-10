@@ -64,6 +64,8 @@
   show link: it => html.a(
     class: cls("underline underline-offset-4", "hover:" + colors.accent),
     href: repr(it.dest).replace("\"", ""),
+    target: "_blank",
+    rel: ("noopener", "noreferrer"),
   )[#it.body]
 
   // --------------------------------------------------------------------------
