@@ -320,7 +320,7 @@ But before that, quick word about how these companies use AI.
 
 == Midrender
 
-Midrender still relies strongly on generating animation via code (Motion Canvas's way of doing things). It works but to a point. I've recently released #link("https://youtube.com/shorts/2-chU_NtCVQ?si=2ZGELcIWy9pRnIM0")[a few videos] using AI to create animations using MotionGfx. While it's usable and _very_ powerful, the audience for this kind of workflow is very niche, the everyday animators and designers simply *do not code*! Furthermore, it sometimes can get tricky to keep track of what the AI is generating, especially without something _(like a timeline)_ to visualize your animations.
+Midrender still relies strongly on generating animation via code (Motion Canvas's way of doing things). It works but to a point. I've recently released #link("https://youtube.com/shorts/2-chU_NtCVQ?si=2ZGELcIWy9pRnIM0")[a few videos] using AI to create animations using MotionGfx. While it's usable and _very_ powerful, the audience for this kind of workflow is very niche, the everyday animators and designers simply *do not code*! Furthermore, it can sometimes get tricky to keep track of what the AI is generating, especially without something _(like a timeline)_ to visualize your animations.
 
 == Hera
 
