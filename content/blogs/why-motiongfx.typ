@@ -11,7 +11,7 @@
 
 = Prelude
 
-For those who are unaware, #link("https://github.com/voxell-tech/motiongfx")[MotionGfx] is a motion graphics creation tool. It uses a command-based workflow to generate animations (similar to Manim and Motion Canvas). We're working hard on its editor, and the LLM integration.
+For those who are unaware, #link("https://github.com/voxell-tech/motiongfx")[MotionGfx] is a backend-agnostic motion graphics creation framework. It uses a command-based workflow to generate animations (similar to Manim and Motion Canvas). We're working hard on an editor, and the LLM integration.
 
 = The old guard: After Effects
 
