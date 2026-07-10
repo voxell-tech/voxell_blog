@@ -15,7 +15,7 @@ For those who are unaware, #link("https://github.com/voxell-tech/motiongfx")[Mot
 
 = The old guard: After Effects
 
-For many years the industry has been stuck with After Effects. It's amazing, even effective when it comes to motion graphics, but the main problem is that it sucks in performance and I have first hand experience with it. Another problem is that complex motion graphics always involves a lot of repetitive manual labor, adjusting keyframes, clicking things. One major thing that was missing from After Effects though, is the ability to integrate into real-time scenarios.
+For many years the industry has been stuck with #link("https://www.adobe.com/my_en/products/aftereffects.html")[After Effects]. It's amazing, even effective when it comes to motion graphics, but the main problem is that it sucks in performance and I have first hand experience with it. Another problem is that complex motion graphics always involves a lot of repetitive manual labor, adjusting keyframes, clicking things. One major thing that was missing from After Effects though, is the ability to integrate into real-time scenarios.
 
 = Lottie and Rive
 
@@ -311,12 +311,24 @@ _30 seconds from #link("https://youtu.be/WTUafAwrunE?si=aeHiLO7sInq6Japx&t=53")[
 
 = The AI era
 
-Then came the AI era, with YC backed companies like Hera and Midrender/Revideo.
-I know there's also Palmier, but that's more like Premiere Pro than After Effects.
+Then came the AI era, with YC backed companies like #link("https://hera.video")[Hera] and #link("https://midrender.com")[Midrender/Revideo].
+I know there's also #link("https://www.palmier.io")[Palmier], but that's more like Premiere Pro than After Effects.
 
-Midrender/Revideo in particular is pretty interesting to me. I have personally used Motion Canvas for a presentation before on "shaders" (#link("https://github.com/nixonyh/beauty-of-shaders")[repo]). It's beautiful, seriously. The workflow is very intuitive, and it's close to the web. And that might be one of its downfalls. I'm not against using web as a renderer, but you have a bunch of limitations when it comes to web technology, especially when it comes to what the GPU can do. I know WebGPU has done a great job to reduce that. But then again, the browser is not the first place where you get to use the most advanced features. What's the main problem here is that Typescript is simply not fast. There was a section in my slide where I was showcasing the many pixels you have on screen, but I was limited to how many squares I can animate due to performance issue. This also brings me to my next main topic: keyframes might not be the problem that Manim and Motion Canvas want to solve.
+Midrender/Revideo in particular is pretty interesting to me. I have personally used Motion Canvas for a presentation before on "shaders" (#link("https://github.com/nixonyh/beauty-of-shaders")[repo]). It's beautiful, seriously. The workflow is very intuitive, and it's close to the web. And that might be one of its downfalls. I'm not against using web as a renderer, but you have a bunch of limitations when it comes to web technology, especially when it comes to what the GPU can do. I know WebGPU has done a great job to reduce that. But then again, the browser is not the first place where you get to use the most advanced features. What's even more pressing here, is that Typescript is simply not fast. There was a section in my slide where I was showcasing the many pixels you have on screen, but I was limited to how many squares I can animate due to performance issue. This also brings me to my next main topic: keyframes might not be the problem that Manim and Motion Canvas want to solve.
 
-But before that, quick word about Hera. No, it's just not an editor. You need to have full control over your timeline structure to be able to make custom modifications. No serious animators would want a prompt only editor. In my eyes, it's set to fail. Not that it won't make money, but that it can't scale.
+But before that, quick word about how these companies use AI.
+
+== Midrender
+
+Midrender still relies strongly on generating animation via code (Motion Canvas's way of doing things). It works but to a point. I've recently released #link("https://youtube.com/shorts/2-chU_NtCVQ?si=2ZGELcIWy9pRnIM0")[a few videos] using AI to create animations using MotionGfx. While it's usable and _very_ powerful, the audience for this kind of workflow is very niche, the everyday animators and designers simply *do not code*! Furthermore, it sometimes can get tricky to keep track of what the AI is generating, especially without something _(like a timeline)_ to visualize your animations.
+
+== Hera
+
+No, it's just not an editor. You need to have full control over your timeline structure to be able to make custom modifications. No serious animators would want a prompt only editor. In my eyes, it's set to fail. Not that it won't make money, but that it can't scale.
+
+== How will MotionGfx use AI?
+
+My plan with MotionGfx hasn't been consolidated yet. But it's heading somewhere that lets you edit animations via the editor itself, while also being able to create complex motion templates or low level shaders from scratch using code.
 
 = What's wrong with just using commands?
 
