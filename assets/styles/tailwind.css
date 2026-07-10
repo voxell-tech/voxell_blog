@@ -33,6 +33,15 @@
 [data-theme="light"] .icon-sun { display: none; }
 [data-theme="light"] .icon-moon { display: inline; }
 
+/* Theme-aware rendered `html.frame()` diagrams: colors are baked into the
+   SVG at compile time, so we render one copy per theme and toggle visibility
+   instead (frames can't read CSS custom properties like normal HTML can). */
+.frame-dark { display: block; }
+.frame-light { display: none; }
+
+[data-theme="light"] .frame-dark { display: none; }
+[data-theme="light"] .frame-light { display: block; }
+
 /* Base styles */
 @layer base {
     html {

@@ -1,6 +1,15 @@
 #import "/templates/post.typ": post
 #import "/monokai_pro.typ": *
 
+// `html.frame()` bakes colors into a static SVG at compile time, so it can't
+// read the site's CSS custom properties / `data-theme` toggle. We render one
+// copy of each diagram per theme (palettes from monokai_pro.typ) and let
+// `.frame-dark` / `.frame-light` (see tailwind.css) decide which is visible.
+#let themed(diagram) = {
+  html.elem("div", attrs: (class: "frame-dark"))[#diagram(dark)]
+  html.elem("div", attrs: (class: "frame-light"))[#diagram(light)]
+}
+
 #show: post.with(
   title: "After Effects is dying, and nobody's replacing it right.",
   author: "Nixon",
@@ -35,102 +44,106 @@ The keyframe problem goes like this. Say you created an animation sequence and y
 
 #linebreak()
 #{
-  set text(font: "0xProto Nerd Font Mono")
-  let track-x0 = 6em
-  let track-w = 36em
-  let row-h = 2.4em
+  let diagram(c) = {
+    set text(font: "0xProto Nerd Font Mono")
+    let track-x0 = 6em
+    let track-w = 36em
+    let row-h = 2.4em
 
-  // Drag-select marquee bounds, in row indices and x fractions.
-  let sel-row0 = 0
-  let sel-row1 = 2
-  let sel-x0 = 0.22
-  let sel-x1 = 0.68
+    // Drag-select marquee bounds, in row indices and x fractions.
+    let sel-row0 = 0
+    let sel-row1 = 2
+    let sel-x0 = 0.22
+    let sel-x1 = 0.68
 
-  let in-selection(row, x) = (
-    row >= sel-row0 and row <= sel-row1 and x >= sel-x0 and x <= sel-x1
-  )
-
-  let diamond(dx, dy, selected: false) = place(
-    top + left,
-    dx: dx - 0.3em,
-    dy: dy - 0.3em,
-  )[
-    #if selected [
-      #place(top + left, dx: -0.15em, dy: -0.15em)[
-        #circle(radius: 0.45em, fill: orange.transparentize(75%))
-      ]
-    ]
-    #polygon(
-      fill: if selected { orange } else { blue },
-      (0.3em, 0em),
-      (0.6em, 0.3em),
-      (0.3em, 0.6em),
-      (0em, 0.3em),
+    let in-selection(row, x) = (
+      row >= sel-row0 and row <= sel-row1 and x >= sel-x0 and x <= sel-x1
     )
-  ]
 
-  let track(label, row, xs) = {
-    let y = row * row-h
-    place(top + left, dx: 0em, dy: y - 0.5em)[#text(
-      size: 0.8em,
-      fill: base6,
-    )[#label]]
-    place(top + left, dx: track-x0, dy: y)[
-      #line(length: track-w, stroke: base3 + 1.5pt)
-    ]
-    for x in xs {
-      diamond(track-x0 + x * track-w, y, selected: in-selection(row, x))
-    }
-  }
-
-  let tracks = (
-    (label: "Position", xs: (0.05, 0.15, 0.25, 0.35, 0.5, 0.65, 0.8, 0.95)),
-    (label: "Rotation", xs: (0.1, 0.3, 0.45, 0.6, 0.75, 0.9)),
-    (label: "Scale", xs: (0.05, 0.2, 0.35, 0.5, 0.6, 0.75, 0.9)),
-    (label: "Opacity", xs: (0.1, 0.5, 0.85)),
-  )
-
-  html.frame(box(width: 50em, height: tracks.len() * row-h)[
-    #for (i, t) in tracks.enumerate() [
-      #track(t.label, i, t.xs)
-    ]
-    #place(top + left, dx: track-x0 + 0.35 * track-w, dy: -0.6em)[
-      #line(
-        start: (0em, 0em),
-        end: (0em, (tracks.len() - 1) * row-h + 0.6em),
-        stroke: (paint: base8, thickness: 1.5pt, dash: "dashed"),
+    let diamond(dx, dy, selected: false) = place(
+      top + left,
+      dx: dx - 0.3em,
+      dy: dy - 0.3em,
+    )[
+      #if selected [
+        #place(top + left, dx: -0.15em, dy: -0.15em)[
+          #circle(radius: 0.45em, fill: c.select.transparentize(75%))
+        ]
+      ]
+      #polygon(
+        fill: if selected { c.select } else { c.accent },
+        (0.3em, 0em),
+        (0.6em, 0.3em),
+        (0.3em, 0.6em),
+        (0em, 0.3em),
       )
     ]
-    #place(top + left, dx: track-x0 + 0.35 * track-w - 1.5em, dy: -1.6em)[
-      #text(size: 0.75em, fill: base8, weight: "bold")[playhead]
-    ]
-    #place(top + left, dx: track-x0, dy: (tracks.len() - 1) * row-h + 1.2em)[
-      #text(size: 0.75em, fill: base6)[0s]
-    ]
-    #place(
-      top + left,
-      dx: track-x0 + track-w - 1.2em,
-      dy: (tracks.len() - 1) * row-h + 1.2em,
-    )[
-      #text(size: 0.75em, fill: base6)[10s]
-    ]
 
-    // Drag-select marquee, spanning the selected rows and x-range.
-    #{
-      let mx0 = track-x0 + sel-x0 * track-w
-      let mx1 = track-x0 + sel-x1 * track-w
-      let my0 = sel-row0 * row-h - 0.55em
-      let my1 = sel-row1 * row-h + 0.55em
-      place(top + left, dx: mx0, dy: my0)[
-        #rect(
-          width: mx1 - mx0,
-          height: my1 - my0,
-          fill: orange.transparentize(88%),
-          stroke: (paint: orange, thickness: 1pt, dash: "dashed"),
+    let track(label, row, xs) = {
+      let y = row * row-h
+      place(top + left, dx: 0em, dy: y - 0.5em)[#text(
+        size: 0.8em,
+        fill: c.muted,
+      )[#label]]
+      place(top + left, dx: track-x0, dy: y)[
+        #line(length: track-w, stroke: c.surface + 1.5pt)
+      ]
+      for x in xs {
+        diamond(track-x0 + x * track-w, y, selected: in-selection(row, x))
+      }
+    }
+
+    let tracks = (
+      (label: "Position", xs: (0.05, 0.15, 0.25, 0.35, 0.5, 0.65, 0.8, 0.95)),
+      (label: "Rotation", xs: (0.1, 0.3, 0.45, 0.6, 0.75, 0.9)),
+      (label: "Scale", xs: (0.05, 0.2, 0.35, 0.5, 0.6, 0.75, 0.9)),
+      (label: "Opacity", xs: (0.1, 0.5, 0.85)),
+    )
+
+    html.frame(box(width: 50em, height: tracks.len() * row-h)[
+      #for (i, t) in tracks.enumerate() [
+        #track(t.label, i, t.xs)
+      ]
+      #place(top + left, dx: track-x0 + 0.35 * track-w, dy: -0.6em)[
+        #line(
+          start: (0em, 0em),
+          end: (0em, (tracks.len() - 1) * row-h + 0.6em),
+          stroke: (paint: c.text, thickness: 1.5pt, dash: "dashed"),
         )
       ]
-    }
-  ])
+      #place(top + left, dx: track-x0 + 0.35 * track-w - 1.5em, dy: -1.6em)[
+        #text(size: 0.75em, fill: c.text, weight: "bold")[playhead]
+      ]
+      #place(top + left, dx: track-x0, dy: (tracks.len() - 1) * row-h + 1.2em)[
+        #text(size: 0.75em, fill: c.muted)[0s]
+      ]
+      #place(
+        top + left,
+        dx: track-x0 + track-w - 1.2em,
+        dy: (tracks.len() - 1) * row-h + 1.2em,
+      )[
+        #text(size: 0.75em, fill: c.muted)[10s]
+      ]
+
+      // Drag-select marquee, spanning the selected rows and x-range.
+      #{
+        let mx0 = track-x0 + sel-x0 * track-w
+        let mx1 = track-x0 + sel-x1 * track-w
+        let my0 = sel-row0 * row-h - 0.55em
+        let my1 = sel-row1 * row-h + 0.55em
+        place(top + left, dx: mx0, dy: my0)[
+          #rect(
+            width: mx1 - mx0,
+            height: my1 - my0,
+            fill: c.select.transparentize(88%),
+            stroke: (paint: c.select, thickness: 1pt, dash: "dashed"),
+          )
+        ]
+      }
+    ])
+  }
+
+  themed(diagram)
 }
 
 The only way you can go through this new edit is by drag selecting chunks of keyframes away to make room for new ones!
@@ -141,155 +154,171 @@ Commands treat animation in a different way. Instead of specifying each and ever
 
 #linebreak()
 #{
-  set text(font: "0xProto Nerd Font Mono")
-  let steps = ("move", "rotate", "wait", "scale", "move", "fade")
-  let step-w = 5.2em
-  let gap = 1.4em
-  let cell = step-w + gap
-  let box-h = 1.9em
-  let playhead-i = 3
+  let diagram(c) = {
+    set text(font: "0xProto Nerd Font Mono")
+    let steps = ("move", "rotate", "wait", "scale", "move", "fade")
+    let step-w = 5.2em
+    let gap = 1.4em
+    let cell = step-w + gap
+    let box-h = 1.9em
+    let playhead-i = 3
 
-  let cmd-box(i, label, active: false) = {
-    let x = i * cell
-    place(top + left, dx: x, dy: 0em)[
-      #rect(
-        width: step-w,
-        height: box-h,
-        radius: 0.35em,
-        fill: if active { blue.transparentize(80%) } else { base3 },
-        stroke: (paint: if active { blue } else { base6 }, thickness: 1pt),
-      )[
-        #align(center + horizon)[
-          #text(size: 0.75em, fill: if active { blue } else { base8 })[#label]
+    let cmd-box(i, label, active: false) = {
+      let x = i * cell
+      place(top + left, dx: x, dy: 0em)[
+        #rect(
+          width: step-w,
+          height: box-h,
+          radius: 0.35em,
+          fill: if active { c.accent.transparentize(80%) } else { c.surface },
+          stroke: (
+            paint: if active { c.accent } else { c.muted },
+            thickness: 1pt,
+          ),
+        )[
+          #align(center + horizon)[
+            #text(
+              size: 0.75em,
+              fill: if active { c.accent } else { c.text },
+            )[#label]
+          ]
         ]
       ]
-    ]
-    if i < steps.len() - 1 {
-      place(top + left, dx: x + step-w + 0.5em, dy: box-h / 2 - 0.35em)[
-        #polygon(
-          fill: base6,
-          (0em, 0em),
-          (0.6em, 0.35em),
-          (0em, 0.7em),
+      if i < steps.len() - 1 {
+        place(top + left, dx: x + step-w + 0.5em, dy: box-h / 2 - 0.35em)[
+          #polygon(
+            fill: c.muted,
+            (0em, 0em),
+            (0.6em, 0.35em),
+            (0em, 0.7em),
+          )
+        ]
+      }
+    }
+
+    html.frame(box(width: steps.len() * cell, height: box-h + 2.4em)[
+      #for (i, s) in steps.enumerate() [
+        #cmd-box(i, s, active: i <= playhead-i)
+      ]
+      #place(top + left, dx: playhead-i * cell + step-w / 2, dy: -0.5em)[
+        #line(
+          start: (0em, 0em),
+          end: (0em, box-h + 0.5em),
+          stroke: (paint: c.text, thickness: 1.5pt, dash: "dashed"),
         )
       ]
-    }
+      #place(top + left, dx: playhead-i * cell + step-w / 2 - 1.5em, dy: -1.5em)[
+        #text(size: 0.75em, fill: c.text, weight: "bold")[playhead]
+      ]
+    ])
   }
 
-  html.frame(box(width: steps.len() * cell, height: box-h + 2.4em)[
-    #for (i, s) in steps.enumerate() [
-      #cmd-box(i, s, active: i <= playhead-i)
-    ]
-    #place(top + left, dx: playhead-i * cell + step-w / 2, dy: -0.5em)[
-      #line(
-        start: (0em, 0em),
-        end: (0em, box-h + 0.5em),
-        stroke: (paint: base8, thickness: 1.5pt, dash: "dashed"),
-      )
-    ]
-    #place(top + left, dx: playhead-i * cell + step-w / 2 - 1.5em, dy: -1.5em)[
-      #text(size: 0.75em, fill: base8, weight: "bold")[playhead]
-    ]
-  ])
+  themed(diagram)
 }
 
 This way, editing the animation can be as simple as adding a new action anywhere in between! Of course this is a simplified visualization of it, in practice commands can be very complex too, you can create a flow of actions, chain them, or have them played simultaneously. But the point is, the timing was never baked in, it's always a consequence of the actions that came before it!
 
 #{
-  set text(font: "0xProto Nerd Font Mono")
-  let step-w = 5.2em
-  let gap = 1.8em
-  let box-h = 1.9em
-  let vgap = 0.7em
+  let diagram(c) = {
+    set text(font: "0xProto Nerd Font Mono")
+    let step-w = 5.2em
+    let gap = 1.8em
+    let box-h = 1.9em
+    let vgap = 0.7em
 
-  let row-y = 2em // top padding reserved for the playhead label
-  let bot-y = row-y + box-h + vgap
-  let single-y = (row-y + bot-y) / 2 - box-h / 2
+    let row-y = 2em // top padding reserved for the playhead label
+    let bot-y = row-y + box-h + vgap
+    let single-y = (row-y + bot-y) / 2 - box-h / 2
 
-  let node(x, y, label, w: step-w, accent: none) = place(
-    top + left,
-    dx: x,
-    dy: y,
-  )[
-    #rect(
-      width: w,
-      height: box-h,
-      radius: 0.35em,
-      fill: if accent != none { accent.transparentize(80%) } else { base3 },
-      stroke: (
-        paint: if accent != none { accent } else { base6 },
-        thickness: 1pt,
-      ),
+    let node(x, y, label, w: step-w, accent: none) = place(
+      top + left,
+      dx: x,
+      dy: y,
     )[
-      #align(center + horizon)[
-        #text(size: 0.75em, fill: if accent != none { accent } else {
-          base8
-        })[#label]
+      #rect(
+        width: w,
+        height: box-h,
+        radius: 0.35em,
+        fill: if accent != none {
+          accent.transparentize(80%)
+        } else { c.surface },
+        stroke: (
+          paint: if accent != none { accent } else { c.muted },
+          thickness: 1pt,
+        ),
+      )[
+        #align(center + horizon)[
+          #text(size: 0.75em, fill: if accent != none { accent } else {
+            c.text
+          })[#label]
+        ]
       ]
     ]
-  ]
 
-  let arrow(x, y) = place(top + left, dx: x + 0.5em, dy: y)[
-    #polygon(fill: base6, (0em, 0em), (0.6em, 0.35em), (0em, 0.7em))
-  ]
-
-  // move starts first (top row), rotate starts a little after it and
-  // runs below it, ending later than move does - same length, just offset.
-  let flow-item-w = step-w * 0.75
-  let stagger = step-w * 0.35
-  let flow-w = stagger + flow-item-w
-
-  let col0 = 0em
-  let col1 = col0 + flow-w + gap * 1.6 // wait
-  let col2 = col1 + step-w + gap * 1.3 // scale / fade
-  let col3 = col2 + step-w + gap * 1.3 // wait
-  let col4 = col3 + step-w + gap // final move
-
-  html.frame(box(width: col4 + step-w, height: bot-y + box-h + 0.6em)[
-    #place(top + left, dx: col0 - 0.4em, dy: row-y - 0.4em)[
-      #rect(
-        width: stagger + flow-item-w + 0.8em,
-        height: bot-y + box-h - row-y + 0.8em,
-        radius: 0.35em,
-        fill: blue.transparentize(88%),
-        stroke: (paint: blue, thickness: 1pt, dash: "dashed"),
-      )
-    ]
-    #node(col0, row-y, "move", w: flow-item-w, accent: blue)
-    #node(col0 + stagger, bot-y, "rotate", w: flow-item-w, accent: blue)
-
-    #arrow((col0 + flow-w + col1) / 2 - 0.8em, single-y + box-h / 2 - 0.35em)
-    #node(col1, single-y, "wait", accent: blue)
-
-    #arrow((col1 + step-w + col2) / 2 - 0.8em, single-y + box-h / 2 - 0.35em)
-    #place(top + left, dx: col2 - 0.4em, dy: row-y - 0.4em)[
-      #rect(
-        width: step-w + 0.8em,
-        height: bot-y + box-h - row-y + 0.8em,
-        radius: 0.35em,
-        fill: blue.transparentize(88%),
-        stroke: (paint: blue, thickness: 1pt, dash: "dashed"),
-      )
-    ]
-    #node(col2, row-y, "scale", accent: blue)
-    #node(col2, bot-y, "fade", accent: blue)
-    #place(top + left, dx: col2 + step-w / 2, dy: row-y - 0.8em)[
-      #line(
-        start: (0em, 0em),
-        end: (0em, bot-y + box-h - row-y + 1.2em),
-        stroke: (paint: base8, thickness: 1.5pt, dash: "dashed"),
-      )
-    ]
-    #place(top + left, dx: col2 + step-w / 2 - 1.5em, dy: row-y - 1.9em)[
-      #text(size: 0.75em, fill: base8, weight: "bold")[playhead]
+    let arrow(x, y) = place(top + left, dx: x + 0.5em, dy: y)[
+      #polygon(fill: c.muted, (0em, 0em), (0.6em, 0.35em), (0em, 0.7em))
     ]
 
-    #arrow((col2 + step-w + col3) / 2 - 0.8em, single-y + box-h / 2 - 0.35em)
-    #node(col3, single-y, "wait")
+    // move starts first (top row), rotate starts a little after it and
+    // runs below it, ending later than move does - same length, just offset.
+    let flow-item-w = step-w * 0.75
+    let stagger = step-w * 0.35
+    let flow-w = stagger + flow-item-w
 
-    #arrow(col3 + step-w, single-y + box-h / 2 - 0.35em)
-    #node(col4, single-y, "move")
-  ])
+    let col0 = 0em
+    let col1 = col0 + flow-w + gap * 1.6 // wait
+    let col2 = col1 + step-w + gap * 1.3 // scale / fade
+    let col3 = col2 + step-w + gap * 1.3 // wait
+    let col4 = col3 + step-w + gap // final move
+
+    html.frame(box(width: col4 + step-w, height: bot-y + box-h + 0.6em)[
+      #place(top + left, dx: col0 - 0.4em, dy: row-y - 0.4em)[
+        #rect(
+          width: stagger + flow-item-w + 0.8em,
+          height: bot-y + box-h - row-y + 0.8em,
+          radius: 0.35em,
+          fill: c.accent.transparentize(88%),
+          stroke: (paint: c.accent, thickness: 1pt, dash: "dashed"),
+        )
+      ]
+      #node(col0, row-y, "move", w: flow-item-w, accent: c.accent)
+      #node(col0 + stagger, bot-y, "rotate", w: flow-item-w, accent: c.accent)
+
+      #arrow((col0 + flow-w + col1) / 2 - 0.8em, single-y + box-h / 2 - 0.35em)
+      #node(col1, single-y, "wait", accent: c.accent)
+
+      #arrow((col1 + step-w + col2) / 2 - 0.8em, single-y + box-h / 2 - 0.35em)
+      #place(top + left, dx: col2 - 0.4em, dy: row-y - 0.4em)[
+        #rect(
+          width: step-w + 0.8em,
+          height: bot-y + box-h - row-y + 0.8em,
+          radius: 0.35em,
+          fill: c.accent.transparentize(88%),
+          stroke: (paint: c.accent, thickness: 1pt, dash: "dashed"),
+        )
+      ]
+      #node(col2, row-y, "scale", accent: c.accent)
+      #node(col2, bot-y, "fade", accent: c.accent)
+      #place(top + left, dx: col2 + step-w / 2, dy: row-y - 0.8em)[
+        #line(
+          start: (0em, 0em),
+          end: (0em, bot-y + box-h - row-y + 1.2em),
+          stroke: (paint: c.text, thickness: 1.5pt, dash: "dashed"),
+        )
+      ]
+      #place(top + left, dx: col2 + step-w / 2 - 1.5em, dy: row-y - 1.9em)[
+        #text(size: 0.75em, fill: c.text, weight: "bold")[playhead]
+      ]
+
+      #arrow((col2 + step-w + col3) / 2 - 0.8em, single-y + box-h / 2 - 0.35em)
+      #node(col3, single-y, "wait")
+
+      #arrow(col3 + step-w, single-y + box-h / 2 - 0.35em)
+      #node(col4, single-y, "move")
+    ])
+  }
+
+  themed(diagram)
 }
 
 This is how you create animations in Manim, Motion Canvas, or #link("https://github.com/voxell-tech/motiongfx")[MotionGfx] under the hood! Animations are created as a sequence of actions / commands and ordered on top of one another.
