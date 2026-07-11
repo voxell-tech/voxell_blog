@@ -13,3 +13,22 @@
 #let base6 = rgb("#939293")
 #let base7 = rgb("#C1C0C0")
 #let base8 = rgb("#FCFCFA")
+
+// Semantic palettes for `html.frame()` diagrams, which bake colors into a
+// static SVG at compile time and can't read the site's CSS custom
+// properties / `data-theme` toggle. Render one copy per theme and toggle
+// visibility with `.frame-dark` / `.frame-light` (see tailwind.css) instead.
+#let dark = (
+  accent: blue,
+  select: orange,
+  surface: base3,
+  muted: base6,
+  text: base8,
+)
+#let light = (
+  accent: rgb("#0d7a8a"),
+  select: rgb("#c2660d"),
+  surface: rgb("#e4e1e2"),
+  muted: rgb("#727072"),
+  text: rgb("#2d2a2e"),
+)

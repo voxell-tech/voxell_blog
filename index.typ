@@ -47,15 +47,4 @@
   ]
 
   #html.elem("hr")
-
-  #set heading(numbering: "1.")
-  #show heading: it => html.elem("div", attrs: (
-    class: "hover-box",
-  ))[#it]
-
-  #html.elem("div", attrs: (style: "display: flex; flex-direction: column"))[
-    = Hello World!
-    = Type-erasure in Rust
-    = Creation of MotionGfx
-  ]
 ]
