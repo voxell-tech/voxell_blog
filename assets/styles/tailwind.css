@@ -42,6 +42,16 @@
 [data-theme="light"] .frame-dark { display: none; }
 [data-theme="light"] .frame-light { display: block; }
 
+/* `html.frame()` sets a fixed `width`/`height` (in em) inline, sized to the
+   diagram's authored layout - it overflows on narrow viewports otherwise.
+   The `viewBox` is still correct, so scaling to 100% width keeps the aspect
+   ratio and lets the diagram shrink to fit the device. */
+.typst-frame {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+}
+
 /* Base styles */
 @layer base {
     html {

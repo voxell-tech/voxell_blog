@@ -47,8 +47,8 @@ The keyframe problem goes like this. Say you created an animation sequence and y
   let diagram(c) = {
     set text(font: "0xProto Nerd Font Mono")
     let track-x0 = 6em
-    let track-w = 36em
-    let row-h = 2.4em
+    let track-w = 24em
+    let row-h = 2.6em
 
     // Drag-select marquee bounds, in row indices and x fractions.
     let sel-row0 = 0
@@ -62,27 +62,27 @@ The keyframe problem goes like this. Say you created an animation sequence and y
 
     let diamond(dx, dy, selected: false) = place(
       top + left,
-      dx: dx - 0.3em,
-      dy: dy - 0.3em,
+      dx: dx - 0.35em,
+      dy: dy - 0.35em,
     )[
       #if selected [
         #place(top + left, dx: -0.15em, dy: -0.15em)[
-          #circle(radius: 0.45em, fill: c.select.transparentize(75%))
+          #circle(radius: 0.5em, fill: c.select.transparentize(75%))
         ]
       ]
       #polygon(
         fill: if selected { c.select } else { c.accent },
-        (0.3em, 0em),
-        (0.6em, 0.3em),
-        (0.3em, 0.6em),
-        (0em, 0.3em),
+        (0.35em, 0em),
+        (0.7em, 0.35em),
+        (0.35em, 0.7em),
+        (0em, 0.35em),
       )
     ]
 
     let track(label, row, xs) = {
       let y = row * row-h
       place(top + left, dx: 0em, dy: y - 0.5em)[#text(
-        size: 0.8em,
+        size: 0.85em,
         fill: c.muted,
       )[#label]]
       place(top + left, dx: track-x0, dy: y)[
@@ -94,13 +94,13 @@ The keyframe problem goes like this. Say you created an animation sequence and y
     }
 
     let tracks = (
-      (label: "Position", xs: (0.05, 0.15, 0.25, 0.35, 0.5, 0.65, 0.8, 0.95)),
-      (label: "Rotation", xs: (0.1, 0.3, 0.45, 0.6, 0.75, 0.9)),
-      (label: "Scale", xs: (0.05, 0.2, 0.35, 0.5, 0.6, 0.75, 0.9)),
-      (label: "Opacity", xs: (0.1, 0.5, 0.85)),
+      (label: "Position", xs: (0.08, 0.3, 0.55, 0.82)),
+      (label: "Rotation", xs: (0.15, 0.4, 0.7)),
+      (label: "Scale", xs: (0.1, 0.35, 0.6, 0.88)),
+      (label: "Opacity", xs: (0.2, 0.6)),
     )
 
-    html.frame(box(width: 50em, height: tracks.len() * row-h)[
+    html.frame(box(width: track-x0 + track-w + 2em, height: tracks.len() * row-h)[
       #for (i, t) in tracks.enumerate() [
         #track(t.label, i, t.xs)
       ]
@@ -112,17 +112,7 @@ The keyframe problem goes like this. Say you created an animation sequence and y
         )
       ]
       #place(top + left, dx: track-x0 + 0.35 * track-w - 1.5em, dy: -1.6em)[
-        #text(size: 0.75em, fill: c.text, weight: "bold")[playhead]
-      ]
-      #place(top + left, dx: track-x0, dy: (tracks.len() - 1) * row-h + 1.2em)[
-        #text(size: 0.75em, fill: c.muted)[0s]
-      ]
-      #place(
-        top + left,
-        dx: track-x0 + track-w - 1.2em,
-        dy: (tracks.len() - 1) * row-h + 1.2em,
-      )[
-        #text(size: 0.75em, fill: c.muted)[10s]
+        #text(size: 0.8em, fill: c.text, weight: "bold")[playhead]
       ]
 
       // Drag-select marquee, spanning the selected rows and x-range.
@@ -208,7 +198,7 @@ Commands treat animation in a different way. Instead of specifying each and ever
         )
       ]
       #place(top + left, dx: playhead-i * cell + step-w / 2 - 1.5em, dy: -1.5em)[
-        #text(size: 0.75em, fill: c.text, weight: "bold")[playhead]
+        #text(size: 0.8em, fill: c.text, weight: "bold")[playhead]
       ]
     ])
   }
@@ -307,7 +297,7 @@ This way, editing the animation can be as simple as adding a new action anywhere
         )
       ]
       #place(top + left, dx: col2 + step-w / 2 - 1.5em, dy: row-y - 1.9em)[
-        #text(size: 0.75em, fill: c.text, weight: "bold")[playhead]
+        #text(size: 0.8em, fill: c.text, weight: "bold")[playhead]
       ]
 
       #arrow((col2 + step-w + col3) / 2 - 0.8em, single-y + box-h / 2 - 0.35em)
