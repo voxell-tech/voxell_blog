@@ -11,7 +11,7 @@
 }
 
 #show: post.with(
-  title: "After Effects is dying, and nobody's replacing it right.",
+  title: "Why I created MotionGfx?",
   author: "Nixon",
   date: datetime(year: 2026, month: 7, day: 10),
   tags: ("MotionGfx", "Motion Graphics"),
@@ -363,4 +363,4 @@ MotionGfx achieved this unification in a very simple way. Treat the animation cr
 
 I have a very optimistic view of what MotionGfx can become in the future. Which is a unified motion engine with low level support, real-time integration, 2D and 3D native, video and audio support, and most importantly, fully open sourced and dual licensed under MIT and Apache 2.0!
 
-I'll admit, achieving every feature that After Effects has to offer is extremely challenging. But that's not a reason for us not to try! After all, _*we're born to create, and create we will!*_
+I'll admit, creating a motion editor while trying to compete with these industry leading softwares is extremely challenging. But that's not a reason for us not to try! After all, _*we're born to create, and create we will!*_
