@@ -2,3 +2,4 @@
 /.tola
 /node_modules
 content/.tola
+.DS_Store

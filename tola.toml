@@ -10,8 +10,8 @@ language = "en"
 url = "https://blog.voxell.dev"
 
 [site.header]
-icon = "assets/icons/favicon.ico"
-elements = ['<meta name="darkreader-lock">', '<script src="/js/theme.js"></script>']
+icon = "assets/favicon/favicon.ico"
+elements = ['<meta name="darkreader-lock">', '<script src="/scripts/theme.js"></script>']
 
 [site.nav]
 spa = true
@@ -30,14 +30,19 @@ path = "sitemap.xml"
 content = "content"
 output = "public"
 minify = true
-deps = ["templates", "utils", "components"]
+deps = ["templates", "utils", "components", "shared"]
 
 [build.assets]
 nested = [
-  "assets/icons",
   "assets/styles",
   "assets/fonts",
-  "assets/js"
+  "assets/js",
+  "shared/icons",
+  "shared/scripts"
+]
+# Serve the favicon at the site root (/favicon.ico) — the path browsers auto-request.
+flatten = [
+  { file = "assets/favicon/favicon.ico", as = "favicon.ico" }
 ]
 
 [build.slug]

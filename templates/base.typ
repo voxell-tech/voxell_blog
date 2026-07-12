@@ -4,6 +4,9 @@
 #import "/templates/tola.typ" as tola
 #import "/utils/tola.typ": cls
 #import "/components/ui.typ" as ui
+#import "/shared/components/nav.typ": nav
+#import "/shared/components/footer.typ": footer
+#import "/shared/links.typ": links
 
 // ============================================================================
 // Configuration
@@ -72,27 +75,9 @@
   // Render
   // --------------------------------------------------------------------------
 
-  html.nav(class: "border-b border-border")[
-    #html.div(class: "max-w-3xl mx-auto px-4 py-3 flex items-center justify-between")[
-      #html.a(class: "opacity-75 hover:opacity-100 transition-opacity", href: "/")[
-        #html.elem("img", attrs: (src: "/icons/voxell.svg", style: "height: 1.5rem; display: inline-block;"))
-      ]
-      #html.div(class: "flex items-center gap-6")[
-        #html.a(
-          class: "text-muted hover:text-accent transition-colors",
-          href: "https://voxell.dev",
-          target: "_blank",
-          rel: ("noopener", "noreferrer"),
-        )[Voxell ↗]
-        #html.elem("button", attrs: (
-          id: "theme-toggle",
-          class: "text-muted hover:text-accent transition-colors cursor-pointer bg-transparent border-0 p-0 leading-none",
-        ))[
-          #html.span(class: "icon-sun")[#html.elem("img", attrs: (src: "/icons/sun.svg", style: "height: 1.25rem; display: inline-block;"))]
-          #html.span(class: "icon-moon")[#html.elem("img", attrs: (src: "/icons/moon.svg", style: "height: 1.25rem; display: inline-block;"))]
-        ]
-      ]
-    ]
-  ]
+  nav(links: (
+    (label: [Voxell ↗], href: links.website, external: true),
+  ))
   html.main(class: "max-w-3xl mx-auto px-4 py-8")[#body]
+  footer()
 }

@@ -1,37 +1,9 @@
 @import 'tailwindcss';
 
-/* Tailwind CSS v4 configuration */
-@theme {
-    /* Monokai Pro dark palette (default) */
-    --color-accent: #78dce8;
-    --color-bg: #19181a;
-    --color-surface: #2d2a2e;
-    --color-text: #fcfcfa;
-    --color-muted: #939293;
-    --color-subtle: #c1c0c0;
-    --color-purple: #ab9df2;
-    --color-border: rgb(255 255 255 / 0.1);
-}
-
-[data-theme="light"] {
-    --color-accent: #0d7a8a;
-    --color-bg: #fafafa;
-    --color-surface: #f0eeef;
-    --color-text: #2d2a2e;
-    --color-muted: #727072;
-    --color-subtle: #5b595c;
-    --color-purple: #6248c8;
-    --color-border: rgb(0 0 0 / 0.1);
-
-    color-scheme: light;
-}
-
-/* Theme toggle icon visibility */
-.icon-sun { display: inline; }
-.icon-moon { display: none; }
-
-[data-theme="light"] .icon-sun { display: none; }
-[data-theme="light"] .icon-moon { display: inline; }
+/* Shared theme, base styles, theme-toggle + social-icon CSS.
+   Override any token by redeclaring @theme below (after this import). */
+@source "../../shared";
+@import "../../shared/styles.css";
 
 /* Theme-aware rendered `html.frame()` diagrams: colors are baked into the
    SVG at compile time, so we render one copy per theme and toggle visibility
@@ -50,46 +22,4 @@
     display: block;
     width: 100% !important;
     height: auto !important;
-}
-
-/* Base styles */
-@layer base {
-    html {
-        @apply scroll-smooth bg-bg text-text;
-        color-scheme: dark;
-    }
-
-    body {
-        @apply antialiased min-h-screen;
-    }
-
-    a {
-        @apply text-accent hover:opacity-80 transition-opacity;
-    }
-
-    code {
-        @apply bg-surface px-1.5 py-0.5 rounded-sm text-sm;
-    }
-
-    pre {
-        @apply bg-surface p-2 rounded-sm overflow-x-auto;
-    }
-
-    pre code {
-        @apply bg-transparent p-0;
-    }
-
-    /* Table styles */
-    table {
-        @apply w-full border-collapse border-4 border-gray-600 my-4;
-    }
-
-    th,
-    td {
-        @apply border-4 border-gray-600 p-2 text-left;
-    }
-
-    th {
-        @apply bg-surface font-semibold;
-    }
 }
